@@ -1,0 +1,25 @@
+
+
+# any.flight.list ########################################################
+
+any.flight.list.title = Lista de vuelos
+
+any.flight.list.label.tag = Etiqueta
+any.flight.list.label.indication = Transferencia propia
+any.flight.list.label.cost = Costo
+
+# any.flight.form ########################################################
+
+any.flight.form.title = Formulario de vuelo
+
+any.flight.form.label.tag = Etiqueta
+any.flight.form.label.indication = Transferencia propia
+any.flight.form.label.cost = Costo
+any.flight.form.label.description = Descripción
+any.flight.form.label.scheduledDeparture = Salida programada
+any.flight.form.label.scheduledArrival = Llegada programada
+any.flight.form.label.departureCity = Ciudad de salida
+any.flight.form.label.arrivalCity = Ciudad de llegada
+any.flight.form.label.layovers = Escalas
+
+any.flight.form.button.list-legs = Tramos del Vuelo
