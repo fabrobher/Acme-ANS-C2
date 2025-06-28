@@ -29,5 +29,8 @@ D02 planning dashboard link: https://github.com/users/agudevbon/projects/3/views
 D03 planning dashboard link: https://github.com/users/agudevbon/projects/5/views/1
 D04 planning dashboard link: https://github.com/users/agudevbon/projects/6/views/1
 
+C2 planning dashboard link: https://github.com/users/fabrobher/projects/1/views/1
+
+
 - **/fragments/**
  
