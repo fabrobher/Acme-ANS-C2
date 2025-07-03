@@ -49,8 +49,8 @@ master.menu.member.list-logs = Listado de registros
 master.menu.technician = Técnico
 master.menu.technician.list-my-maintenance-records= Listar mis registros de mantenimiento
 master.menu.technician.list-my-tasks = Listar mis tareas
-master.menu.technician.list-maintenance-record-catalogue = Listar catálogo de registros de mantenimiento
-master.menu.technician.list-task-catalogue = Listar catálogo de tareas
+master.menu.technician.list-maintenance-record-published = Listar registros de mantenimiento publicados
+master.menu.technician.list-task-published = Listar tareas publicadas
 
 # master.menu.assistanceAgent ##########################################################
 

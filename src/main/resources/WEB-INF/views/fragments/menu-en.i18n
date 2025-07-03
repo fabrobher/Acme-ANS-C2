@@ -42,8 +42,8 @@ master.menu.technician = Technician
 master.menu.technician.list-my-maintenance-records= List my maintenance records	
 master.menu.technician.list-maintenance-records= MaintenanceRecords listing
 master.menu.technician.list-my-tasks = List my tasks
-master.menu.technician.list-maintenance-record-catalogue = List maintenance record catalogue
-master.menu.technician.list-task-catalogue = List task catalogue
+master.menu.technician.list-maintenance-record-published = List maintenance record published
+master.menu.technician.list-task-published = List task published
 
 
 # master.menu.administrator ###################################################

@@ -1,6 +1,7 @@
 
 package acme.features.technician.maintenanceRecord;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
@@ -35,4 +36,7 @@ public interface TechnicianMaintenanceRepository extends AbstractRepository {
 
 	@Query("select i.task from Involves i where i.maintenanceRecord.id =:maintenanceRecordId and i.maintenanceRecord.draftMode = :draft")
 	List<Task> findDraftingTasksByMaintenance(Integer maintenanceRecordId, Boolean draft);
+
+	@Query("select m from MaintenanceRecord m where m.draftMode = false")
+	Collection<MaintenanceRecord> findPublishedMaintenanceRecords();
 }

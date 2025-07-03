@@ -30,10 +30,19 @@ public class TechnicianMaintenanceListService extends AbstractGuiService<Technic
 	public void load() {
 		Collection<MaintenanceRecord> maintenanceRecords;
 		int technicianId;
+		boolean mine;
+		boolean showCreate = false;
 
 		technicianId = super.getRequest().getPrincipal().getActiveRealm().getId();
-		maintenanceRecords = this.repository.findMaintenanceRecordByTechnicianId(technicianId);
+		mine = super.getRequest().hasData("mine", boolean.class);
 
+		if (mine) {
+			maintenanceRecords = this.repository.findMaintenanceRecordByTechnicianId(technicianId);
+			showCreate = true;
+		} else
+			maintenanceRecords = this.repository.findPublishedMaintenanceRecords();
+
+		super.getResponse().addGlobal("showCreate", showCreate);
 		super.getBuffer().addData(maintenanceRecords);
 	}
 

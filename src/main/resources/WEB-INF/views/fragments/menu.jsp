@@ -59,8 +59,8 @@
 			<acme:menu-suboption code="master.menu.technician.list-my-tasks" action="/technician/task/list?mine=true" />
 			<acme:menu-separator/>
 			
-			<acme:menu-suboption code="master.menu.technician.list-maintenance-record-catalogue" action="/technician/maintenance-record/list" />
-			<acme:menu-suboption code="master.menu.technician.list-task-catalogue" action="/technician/task/list" />
+			<acme:menu-suboption code="master.menu.technician.list-maintenance-record-published" action="/technician/maintenance-record/list" />
+			<acme:menu-suboption code="master.menu.technician.list-task-published" action="/technician/task/list" />
 			
 			
 		</acme:menu-option>
