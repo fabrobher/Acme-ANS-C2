@@ -14,10 +14,9 @@
 
 technician.involves.form.title = Linked tasks list
 
-technician.involves.form.label.aircraft = Associated aircraft
 technician.involves.form.label.task = Task
 
-technician.involves.form.button.link = Link tasks
-technician.involves.form.button.unlink = Unlink tasks
+technician.involves.form.button.link = Link task
+technician.involves.form.button.unlink = Unlink task
 technician.involves.form.task = Tasks
 
