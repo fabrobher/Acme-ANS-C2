@@ -14,11 +14,10 @@
 
 #technician.involves.form ########################################################
 
-technician.involves.form.title = Lista de tareas vinculadas
+technician.involves.form.title = Lista de tareas Asociadas
 
-technician.involves.form.label.aircraft = Avión vinculado
 technician.involves.form.label.task = Tarea
 
-technician.involves.form.button.link = Vincular tareas
-technician.involves.form.button.unlink = Desvincular tareas
+technician.involves.form.button.link = Asociar tarea
+technician.involves.form.button.unlink = Desasociar tarea
 technician.involves.form.task = Tareas
