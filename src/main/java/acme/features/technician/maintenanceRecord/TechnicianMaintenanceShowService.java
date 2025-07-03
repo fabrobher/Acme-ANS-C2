@@ -77,7 +77,7 @@ public class TechnicianMaintenanceShowService extends AbstractGuiService<Technic
 		dataset.put("aircraft", aircraftChoices.getSelected().getKey());
 		dataset.put("aircrafts", aircraftChoices);
 		dataset.put("status", statusChoices.getSelected().getKey());
-		dataset.put("statuss", statusChoices);
+		dataset.put("statuses", statusChoices);
 
 		super.getResponse().addData(dataset);
 
