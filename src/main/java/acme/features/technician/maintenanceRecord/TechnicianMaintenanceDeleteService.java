@@ -10,13 +10,13 @@ import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.aircraft.Aircraft;
+import acme.entities.maintenanceRecords.Involves;
 import acme.entities.maintenanceRecords.MaintenanceRecord;
 import acme.entities.maintenanceRecords.MaintenanceStatus;
 import acme.realms.Technician;
 
 @GuiService
-public class TechnicianMaintenanceUpdateService extends AbstractGuiService<Technician, MaintenanceRecord> {
-
+public class TechnicianMaintenanceDeleteService extends AbstractGuiService<Technician, MaintenanceRecord> {
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
@@ -32,18 +32,20 @@ public class TechnicianMaintenanceUpdateService extends AbstractGuiService<Techn
 		MaintenanceRecord maintenanceRecord;
 		Technician technician;
 
-		maintenanceRecordId = super.getRequest().getData("id", int.class);
-		maintenanceRecord = this.repository.findMaintenanceRecordById(maintenanceRecordId);
-		technician = maintenanceRecord == null ? null : maintenanceRecord.getTechnician();
-		status = maintenanceRecord != null && super.getRequest().getPrincipal().hasRealm(technician) && maintenanceRecord.isDraftMode();
-
+		status = super.getRequest().hasData("id", int.class);
+		if (status) {
+			maintenanceRecordId = super.getRequest().getData("id", int.class);
+			maintenanceRecord = this.repository.findMaintenanceRecordById(maintenanceRecordId);
+			technician = maintenanceRecord == null ? null : maintenanceRecord.getTechnician();
+			status = maintenanceRecord != null && super.getRequest().getPrincipal().hasRealm(technician) && maintenanceRecord.isDraftMode();
+		}
 		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
-		int maintenanceRecordId;
 		MaintenanceRecord maintenanceRecord;
+		int maintenanceRecordId;
 
 		maintenanceRecordId = super.getRequest().getData("id", int.class);
 		maintenanceRecord = this.repository.findMaintenanceRecordById(maintenanceRecordId);
@@ -54,11 +56,13 @@ public class TechnicianMaintenanceUpdateService extends AbstractGuiService<Techn
 	@Override
 	public void bind(final MaintenanceRecord maintenanceRecord) {
 
-		int aircraftId = super.getRequest().getData("aircraft", int.class);
-		Aircraft aircraft = this.repository.findAircraftById(aircraftId);
+		int aircraftId;
+		Aircraft aircraft;
+
+		aircraftId = super.getRequest().getData("aircraft", int.class);
+		aircraft = this.repository.findAircraftById(aircraftId);
 
 		super.bindObject(maintenanceRecord, "moment", "status", "inspectionDueDate", "estimatedCost", "notes");
-
 		maintenanceRecord.setAircraft(aircraft);
 	}
 
@@ -69,30 +73,33 @@ public class TechnicianMaintenanceUpdateService extends AbstractGuiService<Techn
 
 	@Override
 	public void perform(final MaintenanceRecord maintenanceRecord) {
-		this.repository.save(maintenanceRecord);
+		Collection<Involves> involves;
+
+		involves = this.repository.findInvolvesByMaintenanceRecordId(maintenanceRecord.getId());
+		this.repository.deleteAll(involves);
+		this.repository.delete(maintenanceRecord);
+
 	}
 
 	@Override
 	public void unbind(final MaintenanceRecord maintenanceRecord) {
 		Collection<Aircraft> aircrafts;
-		SelectChoices aircraftChoices;
-		SelectChoices statusChoices;
+		SelectChoices choicesAircrafts;
+		SelectChoices choicesStatus;
 		Dataset dataset;
 
 		aircrafts = this.repository.findAircrafts();
 
-		statusChoices = SelectChoices.from(MaintenanceStatus.class, maintenanceRecord.getStatus());
-		aircraftChoices = SelectChoices.from(aircrafts, "registrationNumber", maintenanceRecord.getAircraft());
+		choicesStatus = SelectChoices.from(MaintenanceStatus.class, maintenanceRecord.getStatus());
+		choicesAircrafts = SelectChoices.from(aircrafts, "registrationNumber", maintenanceRecord.getAircraft());
 
 		dataset = super.unbindObject(maintenanceRecord, "moment", "inspectionDueDate", "estimatedCost", "notes", "draftMode");
 		dataset.put("technician", maintenanceRecord.getTechnician().getIdentity().getFullName());
-		dataset.put("aircraft", aircraftChoices.getSelected().getKey());
-		dataset.put("aircrafts", aircraftChoices);
-		dataset.put("status", statusChoices.getSelected().getKey());
-		dataset.put("statuses", statusChoices);
+		dataset.put("aircraft", choicesAircrafts.getSelected().getKey());
+		dataset.put("aircrafts", choicesAircrafts);
+		dataset.put("status", choicesStatus.getSelected().getKey());
+		dataset.put("statuses", choicesStatus);
 
 		super.getResponse().addData(dataset);
-
 	}
-
 }
