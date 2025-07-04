@@ -39,4 +39,7 @@ public interface TechnicianMaintenanceRepository extends AbstractRepository {
 
 	@Query("select m from MaintenanceRecord m where m.draftMode = false")
 	Collection<MaintenanceRecord> findPublishedMaintenanceRecords();
+
+	@Query("select i.task from Involves i where i.maintenanceRecord.id =:maintenanceRecordId and i.task.draftMode = :draft")
+	List<Task> findDraftingTasksByMaintenanceRecord(Integer maintenanceRecordId, Boolean draft);
 }

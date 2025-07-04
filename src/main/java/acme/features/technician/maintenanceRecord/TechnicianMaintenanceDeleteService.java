@@ -2,6 +2,7 @@
 package acme.features.technician.maintenanceRecord;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,6 +14,7 @@ import acme.entities.aircraft.Aircraft;
 import acme.entities.maintenanceRecords.Involves;
 import acme.entities.maintenanceRecords.MaintenanceRecord;
 import acme.entities.maintenanceRecords.MaintenanceStatus;
+import acme.entities.task.Task;
 import acme.realms.Technician;
 
 @GuiService
@@ -68,7 +70,15 @@ public class TechnicianMaintenanceDeleteService extends AbstractGuiService<Techn
 
 	@Override
 	public void validate(final MaintenanceRecord maintenanceRecord) {
-		;
+		{
+			boolean publishedTasks;
+
+			List<Task> maintenanceTasks = this.repository.findDraftingTasksByMaintenanceRecord(maintenanceRecord.getId(), false);
+
+			publishedTasks = maintenanceTasks.isEmpty();
+
+			super.state(publishedTasks, "*", "acme.validation.maintenance-record.delete-with-taks.message");
+		}
 	}
 
 	@Override
