@@ -74,19 +74,14 @@ public class TechnicianInvolvesDeleteService extends AbstractGuiService<Technici
 
 	@Override
 	public void validate(final Involves involves) {
-		Collection<Task> tasks;
-		tasks = this.repository.findValidTasksToUnlink(involves.getMaintenanceRecord());
 
-		int taskId = super.getRequest().getData("task", int.class);
-		Task task = this.repository.findTaskById(taskId);
-		super.state(task != null && tasks.contains(task), "task", "acme.validation.involves.no-task-to-unlink");
+		Task task = super.getRequest().getData("task", Task.class);
+		super.state(task != null, "task", "technician.involves.form.error.no-task-to-unlink");
 	}
 
 	@Override
 	public void perform(final Involves involves) {
-		int taskId = super.getRequest().getData("task", int.class);
-
-		Task task = this.repository.findTaskById(taskId);
+		Task task = super.getRequest().getData("task", Task.class);
 		MaintenanceRecord maintenanceRecord = involves.getMaintenanceRecord();
 
 		this.repository.delete(this.repository.findInvolvesByMaintenanceRecordAndTask(maintenanceRecord, task));
@@ -98,19 +93,19 @@ public class TechnicianInvolvesDeleteService extends AbstractGuiService<Technici
 		Collection<Task> tasks;
 		int maintenanceRecordId;
 		MaintenanceRecord maintenanceRecord;
-		SelectChoices typeChoices;
+		SelectChoices choices;
 		Dataset dataset;
 
 		maintenanceRecordId = super.getRequest().getData("maintenanceRecordId", int.class);
 		maintenanceRecord = this.repository.findMaintenanceRecordById(maintenanceRecordId);
 
 		tasks = this.repository.findValidTasksToUnlink(maintenanceRecord);
-		typeChoices = SelectChoices.from(tasks, "description", involves.getTask());
+		choices = SelectChoices.from(tasks, "description", involves.getTask());
 
 		dataset = super.unbindObject(involves, "maintenanceRecord");
 		dataset.put("maintenanceRecordId", involves.getMaintenanceRecord().getId());
-		dataset.put("task", typeChoices.getSelected().getKey());
-		dataset.put("tasks", typeChoices);
+		dataset.put("task", choices.getSelected().getKey());
+		dataset.put("tasks", choices);
 		dataset.put("aircraftRegistrationNumber", involves.getMaintenanceRecord().getAircraft().getRegistrationNumber());
 
 		super.getResponse().addData(dataset);

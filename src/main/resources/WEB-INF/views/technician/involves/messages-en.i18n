@@ -12,11 +12,20 @@
 
 #technician.involves.form ########################################################
 
-technician.involves.form.title = Linked tasks list
-
+technician.involves.form.title = Task link form
+technician.involves.list.title = Linked tasks list
 technician.involves.form.label.task = Task
+technician.involves.form.label.aircraft = Aircraft associated
 
-technician.involves.form.button.link = Link task
-technician.involves.form.button.unlink = Unlink task
-technician.involves.form.task = Tasks
+
+technician.involves.form.button.link = Link
+technician.involves.form.button.unlink = Unlink
+
+
+technician.involves.list.label.maintenanceRecord = Maintenance record
+technician.involves.list.label.task = Task
+
+technician.involves.list.button.create = Create
+
+technician.involves.form.error.no-task-to-unlink = May not be null  
 

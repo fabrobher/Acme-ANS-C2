@@ -15,9 +15,17 @@
 #technician.involves.form ########################################################
 
 technician.involves.form.title = Lista de tareas Asociadas
+technician.involves.form.title = Formulario de vinculación de tarea
+
 
 technician.involves.form.label.task = Tarea
 
 technician.involves.form.button.link = Asociar tarea
 technician.involves.form.button.unlink = Desasociar tarea
 technician.involves.form.task = Tareas
+
+technician.involves.list.label.maintenanceRecord = Registro de mantenimiento
+technician.involves.form.label.aircraft = Aeronave asociada
+	
+
+technician.involves.form.error.no-task-to-unlink = No puede ser nulo  
