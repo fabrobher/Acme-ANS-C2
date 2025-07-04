@@ -13,3 +13,5 @@ acme.validation.maintenance-record.unpublished-tasks.message = The are no tasks 
 
 acme.validation.maintenance-record.inspection-due-date.message = The next inspection date must be after the moment of the Maintenance Record
 acme.validation.maintenance-record.future-inspection-due-date.message= The next inspection date must be in the future
+
+acme.validation.maintenance-record.delete-with-taks.message = You cannot delete a maintenance record with published tasks
