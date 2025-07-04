@@ -100,7 +100,7 @@ public class TechnicianMaintenancePublishService extends AbstractGuiService<Tech
 
 		dataset.put("technician", maintenanceRecord.getTechnician().getIdentity().getFullName());
 
-		dataset.put("statuss", statusChoices);
+		dataset.put("statuses", statusChoices);
 		dataset.put("status", statusChoices.getSelected().getKey());
 		dataset.put("aircrafts", aircraftChoices);
 		dataset.put("aircraft", aircraftChoices.getSelected().getKey());

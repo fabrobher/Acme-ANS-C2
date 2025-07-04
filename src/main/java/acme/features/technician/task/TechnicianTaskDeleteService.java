@@ -71,26 +71,11 @@ public class TechnicianTaskDeleteService extends AbstractGuiService<Technician, 
 
 	@Override
 	public void bind(final Task task) {
-		Technician technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
-		super.bindObject(task, "type", "description", "priority", "estimatedDuration");
-		task.setTechnician(technician);
+
 	}
 
 	@Override
 	public void validate(final Task task) {
-		/*
-		 * boolean status;
-		 * Collection<Involves> involves;
-		 * 
-		 * involves = this.repository.findInvolvesByTaskId(task.getId());
-		 * 
-		 * status = involves.isEmpty();
-		 * super.state(status, "*", "acme.validation.task.maintenance-record-conectado.message", task);
-		 */;
-	}
-
-	@Override
-	public void perform(final Task task) {
 		boolean status;
 		Collection<Involves> involves;
 
@@ -98,19 +83,25 @@ public class TechnicianTaskDeleteService extends AbstractGuiService<Technician, 
 
 		status = involves.isEmpty();
 		super.state(status, "*", "acme.validation.task.maintenance-record-linked.message", task);
+	}
+
+	@Override
+	public void perform(final Task task) {
+
+		this.repository.delete(task);
 
 	}
 	@Override
 	public void unbind(final Task task) {
-		SelectChoices typeChoices;
+		SelectChoices choices;
 		Dataset dataset;
 
-		typeChoices = SelectChoices.from(TaskType.class, task.getType());
+		choices = SelectChoices.from(TaskType.class, task.getType());
 
-		dataset = super.unbindObject(task, "type", "description", "priority", "estimatedDuration", "draftMode");
+		dataset = super.unbindObject(task, "type", "description", "priority", "estimatedDurationHours", "draftMode");
 		dataset.put("technician", task.getTechnician().getIdentity().getFullName());
-		dataset.put("type", typeChoices.getSelected().getKey());
-		dataset.put("types", typeChoices);
+		dataset.put("type", choices.getSelected().getKey());
+		dataset.put("types", choices);
 
 		super.getResponse().addData(dataset);
 	}

@@ -1,3 +1,14 @@
+/*
+ * TechnicianTaskCreateService.java
+ *
+ * Copyright (C) 2012-2025 Rafael Corchuelo.
+ *
+ * In keeping with the traditional purpose of furthering education and research, it is
+ * the policy of the copyright owner to permit non-commercial use and redistribution of
+ * this software. It has been tested carefully, but it is not guaranteed for any particular
+ * purposes. The copyright owner does not offer any warranties or representations, nor do
+ * they accept any liabilities with respect to them.
+ */
 
 package acme.features.technician.task;
 
@@ -21,7 +32,7 @@ public class TechnicianTaskCreateService extends AbstractGuiService<Technician, 
 	@Autowired
 	private TechnicianTaskRepository repository;
 
-	// AbstractGuiService interface --------------------------------------------
+	// AbstractGuiService interface -------------------------------------------
 
 
 	@Override
@@ -60,14 +71,12 @@ public class TechnicianTaskCreateService extends AbstractGuiService<Technician, 
 		task.setTechnician(technician);
 
 		super.getBuffer().addData(task);
-
 	}
 
 	@Override
 	public void bind(final Task task) {
 
 		super.bindObject(task, "type", "description", "priority", "estimatedDuration");
-
 	}
 
 	@Override
@@ -100,19 +109,19 @@ public class TechnicianTaskCreateService extends AbstractGuiService<Technician, 
 
 	@Override
 	public void unbind(final Task task) {
-		SelectChoices typeChoices;
+		SelectChoices choices;
 		Dataset dataset;
 
-		typeChoices = SelectChoices.from(TaskType.class, task.getType());
+		choices = SelectChoices.from(TaskType.class, task.getType());
 
 		dataset = super.unbindObject(task, "type", "description", "priority", "estimatedDuration", "draftMode");
 		dataset.put("technician", task.getTechnician().getIdentity().getFullName());
-		dataset.put("type", typeChoices.getSelected().getKey());
-		dataset.put("types", typeChoices);
+		dataset.put("type", choices.getSelected().getKey());
+		dataset.put("types", choices);
 		if (super.getRequest().hasData("maintenanceRecordId"))
 			dataset.put("maintenanceRecordId", super.getRequest().getData("maintenanceRecordId", Integer.class));
 
 		super.getResponse().addData(dataset);
-
 	}
+
 }
